@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './screens/SplashScreen';
 import AuthScreen from './screens/AuthScreen';
 import JournalScreen from './screens/JournalScreen';
-import AddEntry from './screens/AddEntry'; // Import the AddEntry screen
+import AddEntry from './screens/AddEntry';
+import EditEntry from './screens/EditEntry'; // Ensure this is imported correctly
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="Auth" component={AuthScreen} />
         <Stack.Screen name="Journal" component={JournalScreen} />
         <Stack.Screen name="AddEntry" component={AddEntry} />
+        <Stack.Screen name="EditEntry" component={EditEntry} />
       </Stack.Navigator>
     </NavigationContainer>
   );

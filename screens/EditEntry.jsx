@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import RichTextEditor from 'react-native-pell-rich-editor'; // For rich text formatting
 
 const EditEntry = ({ route, navigation }) => {
   const { entry, onSave } = route.params;
 
-  // State for form fields
   const [title, setTitle] = useState(entry.title);
   const [content, setContent] = useState(entry.content);
   const [mood, setMood] = useState(entry.mood);
   const [date, setDate] = useState(new Date(entry.date));
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  // Handle saving the updated entry
   const handleSave = () => {
     const updatedEntry = {
       ...entry,
@@ -27,7 +24,6 @@ const EditEntry = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  // Handle date change
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -39,7 +35,6 @@ const EditEntry = ({ route, navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Edit Entry</Text>
 
-      {/* Title Input */}
       <Text style={styles.label}>Title</Text>
       <TextInput
         style={styles.input}
@@ -48,16 +43,15 @@ const EditEntry = ({ route, navigation }) => {
         onChangeText={setTitle}
       />
 
-      {/* Content Input */}
       <Text style={styles.label}>Content</Text>
-      <RichTextEditor
-        style={styles.richTextEditor}
+      <TextInput
+        style={styles.input}
         placeholder="Write your thoughts here..."
-        onChange={(text) => setContent(text)}
-        initialContentHTML={content}
+        value={content}
+        onChangeText={setContent}
+        multiline
       />
 
-      {/* Mood Selection */}
       <Text style={styles.label}>Mood</Text>
       <View style={styles.moodContainer}>
         {['Happy', 'Neutral', 'Sad'].map((m) => (
@@ -82,7 +76,6 @@ const EditEntry = ({ route, navigation }) => {
         ))}
       </View>
 
-      {/* Date Picker */}
       <Text style={styles.label}>Date</Text>
       <TouchableOpacity style={styles.dateButton} onPress={() => setShowDatePicker(true)}>
         <Text style={styles.dateButtonText}>
@@ -99,7 +92,6 @@ const EditEntry = ({ route, navigation }) => {
         />
       )}
 
-      {/* Save Button */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
@@ -134,15 +126,6 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     marginBottom: 16,
     fontSize: 16,
-  },
-  richTextEditor: {
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    marginBottom: 16,
-    height: 200,
   },
   moodContainer: {
     flexDirection: 'row',
